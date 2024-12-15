@@ -21,12 +21,9 @@
                     <option value="aac">AAC</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="output_dir">Output Directory:</label>
-                <input type="text" id="output_dir" name="output_dir" placeholder="Enter output directory" required>
-            </div>
-            <button type="submit">Download</button>
+            <button type="submit" class="btn btn-success">Download</button>
         </form>
+        
         {% if message %}
             <div class="message {{ message_type }}">
                 {{ message }}

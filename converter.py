@@ -1,16 +1,15 @@
 import os
 import subprocess
 import shutil
-from flask import Flask, request, send_file, jsonify, after_this_request
+from flask import Flask, request, send_file, jsonify, render_template, after_this_request
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
 DOWNLOADS_DIR = "./downloads"
 
 # Ensure the downloads directory exists
 if not os.path.exists(DOWNLOADS_DIR):
     os.makedirs(DOWNLOADS_DIR)
-
 
 def download_soundcloud_to_mp3(soundcloud_url):
     """
@@ -51,34 +50,20 @@ def download_soundcloud_to_mp3(soundcloud_url):
     except Exception as e:
         return {"error": f"Unexpected error: {e}"}
 
-
 @app.route("/", methods=["GET", "POST"])
 def download_route():
     """
     Handles GET and POST requests:
-    - GET: Serves a simple form for testing.
-    - POST: Handles the SoundCloud MP3 download.
+    - GET: Renders the HTML form for input.
+    - POST: Downloads the SoundCloud MP3 file and provides it as a response.
     """
     if request.method == "GET":
-        # Return an HTML form for user input
-        return '''
-        <html>
-            <head><title>SoundCloud to MP3</title></head>
-            <body>
-                <h1>SoundCloud to MP3 Converter</h1>
-                <form method="POST" action="/">
-                    <label for="url">SoundCloud URL:</label>
-                    <input type="text" id="url" name="url" required>
-                    <button type="submit">Download</button>
-                </form>
-            </body>
-        </html>
-        '''
+        # Render the form using index.html
+        return render_template("index.html")
 
     elif request.method == "POST":
         # Handle POST request for downloading a SoundCloud track
-        data = request.form  # Accept form data from HTML
-        soundcloud_url = data.get("url")
+        soundcloud_url = request.form.get("url")
 
         if not soundcloud_url:
             return jsonify({"error": "Please provide a SoundCloud URL."}), 400
@@ -106,6 +91,5 @@ def download_route():
 
         return send_file(file_path, as_attachment=True)
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=8080)
