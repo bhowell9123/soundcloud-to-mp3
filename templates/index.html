@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SoundCloud to MP3 Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>SoundCloud to MP3 Converter</h1>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="url">SoundCloud URL:</label>
+                <input type="text" id="url" name="url" placeholder="Enter SoundCloud track URL" required>
+            </div>
+            <div class="form-group">
+                <label for="format">Select Audio Format:</label>
+                <select id="format" name="format">
+                    <option value="mp3">MP3</option>
+                    <option value="wav">WAV</option>
+                    <option value="aac">AAC</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="output_dir">Output Directory:</label>
+                <input type="text" id="output_dir" name="output_dir" placeholder="Enter output directory" required>
+            </div>
+            <button type="submit">Download</button>
+        </form>
+        {% if message %}
+            <div class="message {{ message_type }}">
+                {{ message }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
