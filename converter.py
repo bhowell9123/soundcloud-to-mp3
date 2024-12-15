@@ -52,51 +52,59 @@ def download_soundcloud_to_mp3(soundcloud_url):
         return {"error": f"Unexpected error: {e}"}
 
 
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["GET", "POST"])
 def download_route():
     """
-    Handles POST requests to download and serve the SoundCloud MP3.
+    Handles GET and POST requests:
+    - GET: Serves a simple form for testing.
+    - POST: Handles the SoundCloud MP3 download.
     """
-    data = request.json
-    soundcloud_url = data.get("url")
+    if request.method == "GET":
+        # Return an HTML form for user input
+        return '''
+        <html>
+            <head><title>SoundCloud to MP3</title></head>
+            <body>
+                <h1>SoundCloud to MP3 Converter</h1>
+                <form method="POST" action="/">
+                    <label for="url">SoundCloud URL:</label>
+                    <input type="text" id="url" name="url" required>
+                    <button type="submit">Download</button>
+                </form>
+            </body>
+        </html>
+        '''
 
-    if not soundcloud_url:
-        return jsonify({"error": "Please provide a SoundCloud URL."}), 400
+    elif request.method == "POST":
+        # Handle POST request for downloading a SoundCloud track
+        data = request.form  # Accept form data from HTML
+        soundcloud_url = data.get("url")
 
-    # Download the file
-    result = download_soundcloud_to_mp3(soundcloud_url)
+        if not soundcloud_url:
+            return jsonify({"error": "Please provide a SoundCloud URL."}), 400
 
-    if "error" in result:
-        return jsonify(result), 500
+        # Download the file
+        result = download_soundcloud_to_mp3(soundcloud_url)
 
-    # Return the file for download
-    filename = result["filename"]
-    file_path = os.path.join(DOWNLOADS_DIR, filename)
+        if "error" in result:
+            return jsonify(result), 500
 
-    @after_this_request
-    def remove_file(response):
-        """
-        Deletes the file after it is sent to the user.
-        """
-        try:
-            os.remove(file_path)
-        except Exception as e:
-            print(f"Error deleting file: {e}")
-        return response
+        # Return the file for download
+        filename = result["filename"]
+        file_path = os.path.join(DOWNLOADS_DIR, filename)
 
-    return send_file(file_path, as_attachment=True)
+        @after_this_request
+        def remove_file(response):
+            """
+            Deletes the file after it is sent to the user.
+            """
+            try:
+                os.remove(file_path)
+            except Exception as e:
+                print(f"Error deleting file: {e}")
+            return response
 
-
-@app.route("/download/<filename>", methods=["GET"])
-def serve_file(filename):
-    """
-    Serves a previously downloaded file.
-    """
-    file_path = os.path.join(DOWNLOADS_DIR, filename)
-    if os.path.exists(file_path):
         return send_file(file_path, as_attachment=True)
-    else:
-        return jsonify({"error": "File not found."}), 404
 
 
 if __name__ == "__main__":
