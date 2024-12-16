@@ -121,24 +121,38 @@ button.btn:hover {
 
 /* Footer styling */
 footer {
-    margin-top: auto;
-    /* Push footer to bottom */
+    margin-top: 20px;
+    /* Add some spacing above */
     background-color: #1e1e1e;
+    /* Match the container background */
     text-align: center;
-    padding: 10px 0;
-    font-size: 0.9rem;
-    color: #cccccc;
-    border-top: 1px solid #333333;
-}
-
-footer p {
-    margin: 0;
-}
-
-footer p span {
+    padding: 20px 0;
+    /* Increase padding for more height */
+    font-size: 1.2rem;
+    /* Increase the font size */
+    font-weight: bold;
+    /* Make the text bold */
     color: #ffa500;
-    /* Orange heart */
+    /* Orange accent color */
 }
+
+footer a {
+    color: #ffa500;
+    /* Match the link color to the footer text */
+    text-decoration: none;
+    /* Remove underline */
+    font-size: 1.2rem;
+    /* Match the font size */
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    /* Add underline on hover */
+    color: #ff8c00;
+    /* Slightly darker orange on hover */
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
@@ -154,7 +168,9 @@ footer p span {
     button.btn {
         font-size: 1rem;
     }
-}/* Loading Bar */
+}
+
+/* Loading Bar */
 .loading-container {
     margin-top: 20px;
     text-align: center;
