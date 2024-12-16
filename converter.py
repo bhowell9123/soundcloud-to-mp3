@@ -50,18 +50,23 @@ def download_soundcloud_to_mp3(soundcloud_url):
     except Exception as e:
         return {"error": f"Unexpected error: {e}"}
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST", "HEAD"])
 def download_route():
     """
-    Handles GET and POST requests:
+    Handles GET, POST, and HEAD requests:
+    - HEAD: Returns a 200 OK response.
     - GET: Renders the HTML form for input.
     - POST: Downloads the SoundCloud MP3 file and provides it as a response.
     """
+    if request.method == "HEAD":
+        # Return an empty 200 OK response for health checks or head requests
+        return "", 200
+
     if request.method == "GET":
         # Render the form using index.html
         return render_template("index.html")
 
-    elif request.method == "POST":
+    if request.method == "POST":
         # Handle POST request for downloading a SoundCloud track
         soundcloud_url = request.form.get("url")
 
