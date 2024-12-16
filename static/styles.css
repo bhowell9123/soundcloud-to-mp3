@@ -1,73 +1,187 @@
+/* Global styles */
 body {
-    background-color: lightblue;
+    background-color: #121212;
+    /* Dark background */
+    color: #ffffff;
+    /* White text */
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 h1 {
-    color: darkblue;
+    color: #ffa500;
+    /* Orange accent */
     text-align: center;
+    margin-bottom: 10px;
 }
 
+p.subtitle {
+    color: #cccccc;
+    text-align: center;
+    margin-top: 0;
+    font-size: 1rem;
+}
+
+/* Container styling */
 .container {
-    width: 50%;
+    background: #1e1e1e;
+    /* Slightly lighter dark */
+    padding: 20px 30px;
     margin: 50px auto;
-    padding: 30px;
-    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     text-align: center;
-    color: #333;
 }
 
+/* Form styling */
 .form-group {
-    margin-bottom: 20px;
+    margin: 15px 0;
+    text-align: left;
 }
 
 label {
     display: block;
-    margin-bottom: 8px;
-    color: #555;
+    margin-bottom: 5px;
+    color: #ffa500;
+    /* Orange accent */
+    font-weight: bold;
 }
 
 input[type="text"],
 select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin-top: 5px;
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
 }
 
-button {
+input::placeholder {
+    color: #999999;
+    /* Placeholder text */
+}
+
+button.btn {
     width: 100%;
-    padding: 12px;
-    background-color: #28a745;
+    padding: 10px;
+    background-color: #ffa500;
+    /* Orange accent */
     border: none;
-    color: #fff;
-    font-size: 16px;
-    border-radius: 4px;
+    color: #121212;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-button:hover {
-    background-color: #218838;
+button.btn:hover {
+    background-color: #ff8c00;
+    /* Darker orange on hover */
 }
 
+/* Loading message styling */
+.loading {
+    color: #ffa500;
+    /* Orange accent */
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+/* Message box for success or errors */
 .message {
     margin-top: 20px;
-    padding: 15px;
-    border-radius: 4px;
+    padding: 10px;
+    border-radius: 5px;
     text-align: center;
 }
 
-.success {
-    background-color: #d4edda;
-    color: #155724;
+.message.success {
+    background-color: #28a745;
+    /* Green */
+    color: #ffffff;
 }
 
-.error {
-    background-color: #f8d7da;
-    color: #721c24;
+.message.error {
+    background-color: #dc3545;
+    /* Red */
+    color: #ffffff;
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+    /* Push footer to bottom */
+    background-color: #1e1e1e;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    color: #cccccc;
+    border-top: 1px solid #333333;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer p span {
+    color: #ffa500;
+    /* Orange heart */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    button.btn {
+        font-size: 1rem;
+    }
+}/* Loading Bar */
+.loading-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.loading-text {
+    color: #ffa500;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.progress {
+    width: 100%;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(255, 165, 0, 0.3);
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #ffa500;
+    width: 0%;
+    transition: width 0.1s ease-in-out;
+    text-align: center;
+    color: #121212;
+    font-weight: bold;
+    line-height: 20px;
 }
